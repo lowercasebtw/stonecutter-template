@@ -33,15 +33,16 @@ class ModData {
 }
 
 class Dependencies {
-    val neoForgeVersion = property("deps.neoforge_version") as String?
-    
     val fabricLoaderVersion = property("deps.fabric_loader_version") as String?
-    val fabricApiVersion = property("deps.fabric_api_version") as String?
-    
+
     val devAuthVersion = property("deps.devauth_version") as String?
     val lombokVersion = property("deps.lombok_version") as String?
     val mixinConstraintsVersion = property("deps.mixinconstraints_version") as String?
     val mixinSquaredVersion = property("deps.mixinsquared_version") as String?
+
+    // Versioned
+    val neoForgeVersion = property("deps.neoforge_version") as String?
+    val fabricApiVersion = property("deps.fabric_api_version") as String?
 }
 
 class LoaderData {
