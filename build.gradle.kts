@@ -72,7 +72,10 @@ java {
 }
 
 stonecutter {
-    constants["fabric"] = loader.isFabric
+    replacements.string {
+        direction = eval(current.version, ">=1.21.11")
+        replace("ResourceLocation", "Identifier")
+    }
 }
 
 val currentCommitHash: String by lazy {
