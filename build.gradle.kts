@@ -87,7 +87,7 @@ val currentCommitHash: String by lazy {
 blossom {
     replaceToken("@MODID@", mod.id)
     replaceToken("@VERSION@", mod.version)
-    replaceToken("@COMMIT@", currentCommitHash) // if development version, put currentCommitHash else put ""
+    replaceToken("@COMMIT@", currentCommitHash)
 }
 
 loom {
