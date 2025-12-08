@@ -1,3 +1,5 @@
+import com.google.devtools.ksp.processing.parseBoolean
+
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.loom)
@@ -5,6 +7,7 @@ plugins {
     alias(libs.plugins.blossom)
     alias(libs.plugins.ksp)
     alias(libs.plugins.fletchingtable.fabric)
+    id("maven-publish")
 }
 
 repositories {
@@ -27,7 +30,7 @@ class ModData {
     val modrinth = property("mod.modrinth") as String
     val curseforge = property("mod.curseforge") as String
     val discord = property("mod.discord") as String
-
+    val obfuscated = parseBoolean(property("mod.obfuscated").toString())
     val minecraftVersion = property("mod.minecraft_version") as String
     val minecraftVersionRange = property("mod.minecraft_version_range") as String
 }
@@ -55,9 +58,10 @@ val mod = ModData()
 val deps = Dependencies()
 val loader = LoaderData()
 
+val versionString = "${mod.version}-${mod.minecraftVersion}_${loader.name}"
 group = mod.group
-base { 
-    archivesName.set("${mod.id}-${mod.version}+${mod.minecraftVersion}-${loader.name}") 
+base {
+    archivesName.set("${mod.id}-${versionString}")
 }
 
 java {
@@ -210,6 +214,19 @@ tasks {
         into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
         dependsOn("build")
     }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifactId = mod.id
+            group = project.group
+            version = versionString
+            from(components["java"])
+        }
+    }
+
+    repositories {}
 }
 
 if (stonecutter.current.isActive) {
