@@ -8,5 +8,8 @@ public final class TemplateFabricClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		System.out.println("Hello from lowercasebtw stonecutter template!");
+		System.out.println("Mod ID: @MODID@");
+		System.out.println("Version: @VERSION@");
+		System.out.println("Commit hash: @COMMIT_HASH@");
 	}
 }

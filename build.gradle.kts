@@ -104,18 +104,6 @@ stonecutter {
     }
 }
 
-val currentCommitHash: String by lazy {
-    Runtime.getRuntime()
-        .exec(arrayOf("git", "rev-parse", "--verify", "--short", "HEAD"), null, rootDir)
-        .inputStream.bufferedReader().readText().trim()
-}
-
-blossom {
-    replaceToken("@MODID@", mod.id)
-    replaceToken("@VERSION@", mod.version)
-    replaceToken("@COMMIT@", currentCommitHash)
-}
-
 extensions.configure<LoomGradleExtensionAPI> {
     runConfigs.all {
         ideConfigGenerated(stonecutter.current.isActive)
@@ -258,6 +246,18 @@ tasks {
         into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
         dependsOn("build")
     }
+}
+
+val currentCommitHash: String by lazy {
+    Runtime.getRuntime()
+        .exec(arrayOf("git", "rev-parse", "--verify", "--short", "HEAD"), null, rootDir)
+        .inputStream.bufferedReader().readText().trim()
+}
+
+blossom {
+    replaceToken("@MODID@", mod.id)
+    replaceToken("@VERSION@", mod.version)
+    replaceToken("@COMMIT_HASH@", currentCommitHash)
 }
 
 publishing {
