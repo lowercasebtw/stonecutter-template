@@ -5,7 +5,8 @@ import net.fabricmc.api.ClientModInitializer;
 
 @Entrypoint
 public final class TemplateFabricClient implements ClientModInitializer {
-    @Override
-    public void onInitializeClient() {
-    }
+	@Override
+	public void onInitializeClient() {
+		System.out.println("Hello from lowercasebtw stonecutter template!");
+	}
 }
