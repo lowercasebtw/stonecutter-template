@@ -119,17 +119,7 @@ extensions.configure<LoomGradleExtensionAPI> {
 
     runs {
         afterEvaluate {
-            val mixinJarFile = configurations.runtimeClasspath.get().incoming.artifactView {
-                componentFilter {
-                    it is ModuleComponentIdentifier && it.group == "net.fabricmc" && it.module == "sponge-mixin"
-                }
-            }.files
             configureEach {
-                if (!mixinJarFile.isEmpty) {
-                    // NeoForge specific?
-                    // vmArg("-javaagent:${mixinJarFile.first()}")
-                }
-
                 property("mixin.hotSwap", "true")
                 property("mixin.debug.export", "true") // Puts mixin outputs in /run/.mixin.out
                 property("devauth.enabled", "true")
