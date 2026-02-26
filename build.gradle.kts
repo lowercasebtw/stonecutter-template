@@ -3,6 +3,7 @@
 import com.google.devtools.ksp.processing.parseBoolean
 import dev.kikugie.stonecutter.StonecutterExperimentalAPI
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
+import net.fabricmc.loom.api.fabricapi.FabricApiExtension
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -149,6 +150,7 @@ fletchingTable {
 }
 
 val loom = extensions.getByType<LoomGradleExtensionAPI>()
+val fabricApi = extensions.getByType<FabricApiExtension>()
 val minecraft by configurations.existing
 val include by configurations.existing
 val modImplementation: NamedDomainObjectProvider<Configuration> =
@@ -182,6 +184,7 @@ dependencies {
     if (loader.isFabric) {
         modImplementation("net.fabricmc:fabric-loader:${deps.fabricLoaderVersion}")!!
         modImplementation("net.fabricmc.fabric-api:fabric-api:${deps.fabricApiVersion}")
+
         optionalProp("deps.modmenu_version") { prop ->
             modImplementation("com.terraformersmc:modmenu:$prop") {
                 exclude(group, "net.fabricmc.fabric-api")
