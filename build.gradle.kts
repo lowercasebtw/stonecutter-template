@@ -139,8 +139,8 @@ fletchingTable {
     }
 }
 
-val loom = extensions.getByType<LoomGradleExtensionAPI>()
-val fabricApi = extensions.getByType<FabricApiExtension>()
+val loom: LoomGradleExtensionAPI by extensions
+val fabricApi: FabricApiExtension by extensions
 val minecraft by configurations.existing
 val include by configurations.existing
 val modImplementation: NamedDomainObjectProvider<Configuration> =
