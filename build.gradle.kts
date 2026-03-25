@@ -16,16 +16,6 @@ plugins {
     id("maven-publish")
 }
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1") // DevAuth
-    maven("https://maven.parchmentmc.org") // Parchment
-    maven("https://maven.neoforged.net/releases") // NeoForge
-    maven("https://maven.bawnorton.com/releases") // MixinSquared
-    maven("https://maven.terraformersmc.com/") // Mod Menu
-}
-
 class ModData {
     val id = property("mod.id") as String
     val name = property("mod.name") as String
@@ -91,6 +81,9 @@ java {
 
     sourceCompatibility = requiredJava
     targetCompatibility = requiredJava
+    if (!mod.obfuscated) {
+        withSourcesJar()
+    }
 }
 
 stonecutter {
@@ -139,6 +132,16 @@ fletchingTable {
     }
 }
 
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1") // DevAuth
+    maven("https://maven.parchmentmc.org") // Parchment
+    maven("https://maven.neoforged.net/releases") // NeoForge
+    maven("https://maven.bawnorton.com/releases") // MixinSquared
+    maven("https://maven.terraformersmc.com/") // Mod Menu
+}
+
 val loom: LoomGradleExtensionAPI by extensions
 val fabricApi: FabricApiExtension by extensions
 val minecraft by configurations.existing
@@ -174,14 +177,13 @@ dependencies {
     if (loader.isFabric) {
         modImplementation("net.fabricmc:fabric-loader:${deps.fabricLoaderVersion}")!!
         modImplementation("net.fabricmc.fabric-api:fabric-api:${deps.fabricApiVersion}")
-
         optionalProp("deps.modmenu_version") { prop ->
             modImplementation("com.terraformersmc:modmenu:$prop") {
-                exclude(group, "net.fabricmc.fabric-api")
+                exclude(group="net.fabricmc.fabric-api")
             }
         }
     } else if (loader.isNeoForge) {
-        //"neoForge"("net.neoforged:neoforge:${deps.neoForgeVersion}")
+        // TODO: "neoForge"("net.neoforged:neoforge:${deps.neoForgeVersion}")
     }
 }
 
@@ -276,16 +278,19 @@ tasks {
         }
     }
 
-    // Builds the version into a shared folder in `build/libs/${mod version}/`
     register<Copy>("buildAndCollect") {
         group = "build"
+
         if (mod.obfuscated) {
             val remapJar by existing(net.fabricmc.loom.task.RemapJarTask::class)
             val remapSourcesJar by existing(net.fabricmc.loom.task.RemapSourcesJarTask::class)
             from(remapJar, remapSourcesJar)
+        } else {
+            val sourcesJar by existing
+            from(jar, sourcesJar)
         }
 
-        into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
+        into(rootProject.layout.buildDirectory.file("libs/${mod.version}"))
         dependsOn("build")
     }
 }
