@@ -23,6 +23,7 @@ class ModData {
 class Dependencies {
     val fabricLoaderVersion = property("deps.fabric_loader_version") as String
     val devAuthVersion = property("deps.devauth_version") as String
+    val mappingsVersion = property("deps.mappings_version") as String
 }
 
 val mod = ModData()
@@ -50,7 +51,7 @@ repositories {
 
 dependencies {
     minecraft("com.mojang:minecraft:${mod.minecraftVersion}")
-    mappings(legacy.yarn(mod.minecraftVersion, 604))
+    mappings(legacy.yarn(mod.minecraftVersion, deps.mappingsVersion))
 
     modRuntimeOnly("me.djtheredstoner:DevAuth-${loader.name}:${deps.devAuthVersion}")
     if (loader.isFabric) {
