@@ -3,10 +3,9 @@ pluginManagement {
 		mavenCentral()
 		gradlePluginPortal()
 		maven("https://maven.fabricmc.net")
-		maven("https://maven.architectury.dev")
+		maven("https://maven.legacyfabric.net/")
 		maven("https://maven.kikugie.dev/snapshots")
 		maven("https://maven.kikugie.dev/releases")
-		maven("https://repo.polyfrost.cc/releases")
 	}
 }
 
@@ -24,11 +23,9 @@ stonecutter {
 			}
 		}
 
-		mc("1.21.10", listOf("fabric"))
-		mc("1.21.11", listOf("fabric"))
-		mc("26.1", listOf("fabric"))
+		mc("1.8.9", listOf("fabric"))
 
-		vcsVersion = "1.21.10-fabric"
+		vcsVersion = "1.8.9-fabric"
 	}
 }
 
@@ -38,4 +35,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Stonecutter Template"
+rootProject.name = "Legacy Stonecutter Template"

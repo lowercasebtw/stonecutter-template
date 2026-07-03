@@ -3,7 +3,7 @@
 	"package": "btw.lowercase.template.mixins",
 	"compatibilityLevel": "JAVA_8",
 	"client": [
-		"MixinMinecraft"
+      "MixinMinecraftClient"
 	],
 	"injectors": {
 		"defaultRequire": 1

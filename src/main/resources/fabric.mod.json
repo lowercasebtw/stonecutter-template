@@ -7,27 +7,18 @@
 	"authors": [
 		"lowercasebtw"
 	],
-	"contact": {
-		"sources": "${source}",
-		"issues": "${issues}"
-	},
-	"license": "${license}",
-	"icon": "assets/${id}/icon.png",
+	"license": "ARR",
 	"accessWidener": "${id}.accesswidener",
 	"environment": "client",
 	"depends": {
 		"fabricloader": ">=${fabric_loader_version}",
-		"minecraft": "${minecraft_version_range}",
-		"fabric-api": "*"
+		"minecraft": "${minecraft_version_range}"
 	},
 	"custom": {
 		"modmenu": {
 			"links": {
-				"modmenu.discord": "${discord}",
-				"modmenu.modrinth": "${modrinth}",
-				"modmenu.curseforge": "${curseforge}"
-			},
-			"update_checker": true
+				"modmenu.discord": "${discord}"
+			}
 		}
 	}
 }
